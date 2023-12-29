@@ -1,44 +1,45 @@
-import string
-import random
+import string,random
 
-# Getting password length
-length = int(input("Enter password length: "))
+def generate(n):
 
-print('''Choose character set for password from these : 1. Digits 2. Letters 3. Special characters 4. Exit''')
+    """
+    This function will take n as password length then generate final string which has letters,digits and puntuation
+    then convert that string into list 
+    then uses random.shuffle to shuffle that list
+    initiale another list in which we store our password
+    then iterate a loop to password length so it can save characters through random.choice in pw_list
+    shuffle pw_list for more randomness
+    converts pw_list into string password. 
+    """
 
-characterList = ""
+    s1 = string.ascii_letters
+    s2=string.digits
+    s3=string.punctuation
 
-# Getting character set for password
-while(True):
-    choice = int(input("Pick a number "))
-    if(choice == 1):
+    final = s1+s2+s3
 
-        # Adding letters to possible characters
-        characterList += string.ascii_letters
-    elif(choice == 2):
+    l1 = list(final)
+    random.shuffle(l1)
 
-        # Adding digits to possible characters
-        characterList += string.digits
-    elif(choice == 3):
+    pw_list = []
 
-        # Adding special characters to possible
-        # characters
-        characterList += string.punctuation
-    elif(choice == 4):
-        break
-    else:
-        print("Please pick a valid option!")
+    i=0
+    while i<n:
+        pw_list.extend(random.choice(l1))
+        i+=1
 
-password = []
+    random.shuffle(pw_list)
+    password = ''.join(pw_list)
+    print("Password: "+password)
 
-for i in range(length):
 
-    # Picking a random character from our 
-    # character list
-    randomchar = random.choice(characterList)
-
-    # appending a random character to password
-    password.append(randomchar)
-
-# printing password as a string
-print("The random password is " + "".join(password))
+if __name__ == "__main__":
+    c="y"
+    while c=="y":
+        try:
+            n = int(input("Enter desired length of password: "))
+            generate(n)
+            c=input("Do you want to generate another password? (y/n): ").lower()
+        except:
+            print("Please Enter integer value for length")
+       
